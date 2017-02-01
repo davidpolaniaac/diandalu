@@ -1,0 +1,87 @@
+package co.com.bancolombia.entidades;
+
+import java.io.Serializable;
+import javax.persistence.*;
+import java.util.List;
+
+
+/**
+ * The persistent class for the integrante database table.
+ * 
+ */
+@Entity
+@NamedQuery(name="Integrante.findAll", query="SELECT i FROM Integrante i")
+public class Integrante implements Serializable {
+	private static final long serialVersionUID = 1L;
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int idIntegrante;
+
+	private int cedula;
+
+	private String email;
+
+	private String nombre;
+
+	//bi-directional many-to-one association to RolIntegrante
+	@ManyToOne
+	@JoinColumn(name="Rol_Integrante_idRolIntegrante")
+	private RolIntegrante rolIntegrante;
+
+	//bi-directional many-to-many association to Subdominio
+	@ManyToMany(mappedBy="integrantes")
+	private List<Subdominio> subdominios;
+
+	public Integrante() {
+	}
+
+	public int getIdIntegrante() {
+		return this.idIntegrante;
+	}
+
+	public void setIdIntegrante(int idIntegrante) {
+		this.idIntegrante = idIntegrante;
+	}
+
+	public int getCedula() {
+		return this.cedula;
+	}
+
+	public void setCedula(int cedula) {
+		this.cedula = cedula;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNombre() {
+		return this.nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public RolIntegrante getRolIntegrante() {
+		return this.rolIntegrante;
+	}
+
+	public void setRolIntegrante(RolIntegrante rolIntegrante) {
+		this.rolIntegrante = rolIntegrante;
+	}
+
+	public List<Subdominio> getSubdominios() {
+		return this.subdominios;
+	}
+
+	public void setSubdominios(List<Subdominio> subdominios) {
+		this.subdominios = subdominios;
+	}
+
+}
