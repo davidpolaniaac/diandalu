@@ -14,6 +14,13 @@ public class IntegranteBusiness {
 	
 	@Transactional
 	public List<Integrante> obtenerIntegrantes(){	
-		return entityManager.createNamedQuery("Integrante.findAll",Integrante.class).getResultList();
+		return entityManager.createNamedQuery("Integrante.findAll",Integrante.class)
+				.getResultList();
 	}
+	@Transactional
+	public void saveIntegrate(Integrante integrante){
+		entityManager.persist(integrante);
+	}
+	
+	
 }
