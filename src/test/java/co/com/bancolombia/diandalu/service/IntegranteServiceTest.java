@@ -2,13 +2,9 @@ package co.com.bancolombia.diandalu.service;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.enterprise.inject.Any;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -16,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.*;
 import co.com.bancolombia.business.IntegranteBusiness;
 import co.com.bancolombia.entidades.Integrante;
-import static org.mockito.Matchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class IntegranteServiceTest {
