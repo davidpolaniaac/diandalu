@@ -8,6 +8,7 @@ import javax.enterprise.inject.Any;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -55,14 +56,14 @@ public class IntegranteServiceTest {
 	@Test
 	public void testSaveIntegrante(){
 		//arrange
-		
+		Integrante integrante = new Integrante();
 		//act
 		
-		integranteService.saveIntegrante(new Integrante());
+		integranteService.saveIntegrante(integrante);
 		
 		//assert
 		
-		Mockito.verify(integranteBusiness).saveIntegrate(any(Integrante.class));
+		Mockito.verify(integranteBusiness).saveIntegrate(integrante);
 	}
 	
 	
