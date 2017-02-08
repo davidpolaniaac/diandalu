@@ -1,4 +1,4 @@
-package co.com.bancolombia.entidades;
+package co.com.bancolombia.diandalu.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -32,9 +32,6 @@ public class Integrante implements Serializable {
 	//bi-directional many-to-many association to Subdominio
 	@ManyToMany(mappedBy="integrantes")
 	private List<Subdominio> subdominios;
-
-	public Integrante() {
-	}
 
 	public int getIdIntegrante() {
 		return this.idIntegrante;

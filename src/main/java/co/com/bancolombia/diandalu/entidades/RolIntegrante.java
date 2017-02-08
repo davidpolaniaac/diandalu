@@ -1,8 +1,8 @@
-package co.com.bancolombia.entidades;
+package co.com.bancolombia.diandalu.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
+
 
 
 /**
@@ -21,10 +21,6 @@ public class RolIntegrante implements Serializable {
 
 	private String rolIntegrante;
 
-	
-
-	public RolIntegrante() {
-	}
 
 	public int getIdRolIntegrante() {
 		return this.idRolIntegrante;

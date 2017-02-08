@@ -1,7 +1,6 @@
 package co.com.bancolombia.diandalu.service;
 
 import static org.junit.Assert.assertEquals;
-
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -10,13 +9,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
+import co.com.bancolombia.diandalu.business.SubdominioBusiness;
+import co.com.bancolombia.diandalu.entidades.Subdominio;
 
-import co.com.bancolombia.business.SubdominioBusiness;
-import co.com.bancolombia.entidades.Subdominio;
-import static org.junit.Assert.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SubdominioServiceTest {
@@ -36,7 +32,7 @@ public class SubdominioServiceTest {
 	}
 	
 	@Test
-	public void testGetSubdominioById() throws Exception {
+	public void debeRetornarUnSubdominioCuandoLeEnvieUnID() throws Exception {
 		//arrange
 		Mockito.when(subdominioBusiness.getSubdominio(1)).thenReturn(subdominios.get(0));
 		
@@ -48,26 +44,27 @@ public class SubdominioServiceTest {
 	}
 	
 	@Test
-	public void testUpdateSubdominio() throws Exception {
-		
+	public void debeVerificarQueSellameElMedotoDelGetDelNegocioCuandoLeEnviaIdDelSundominio() throws Exception {
 		//arrange
+		Mockito.when(subdominioBusiness.getSubdominio(1)).thenReturn(subdominios.get(0));
 		
-		Mockito.doAnswer(new Answer<Void>() {
-		    @Override
-		    public Void answer(InvocationOnMock invocation) throws Throwable {
-		    	  Object[] args = invocation.getArguments();
-			      Subdominio subdominio = (Subdominio) args[0];
-			      subdominio.setNombre("WEB FONDOS");
-			      return null;
-		    }
-		}).when(subdominioBusiness).updateSubdominio(subdominios.get(0));
-		    
 		//act
-		subdominioService.updateSubdominio(subdominios.get(0));
-		
+		subdominioService.getSubdominioById(1);
 		
 		//assert
-		assertEquals("WEB FONDOS", subdominios.get(0).getNombre());
+		Mockito.verify(subdominioBusiness).getSubdominio(1);
+	}
+	
+	@Test
+	public void debeActualizarUnSubdominioCuandoLEnvieElSubdominioConlosNuevosCambios() throws Exception {
+		
+		//arrange
+		Subdominio subdominio = new Subdominio();
+		//act
+		subdominioService.updateSubdominio(subdominio);
+		
+		//assert
+		Mockito.verify(subdominioBusiness).updateSubdominio(subdominio);;
 	}
 
 	

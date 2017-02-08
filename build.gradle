@@ -1,5 +1,9 @@
 apply plugin: 'war'
+apply plugin: "jacoco"
+apply plugin: "org.sonarqube"
+
 group = 'co.com.bancolombia.diandalu'
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -7,13 +11,23 @@ repositories {
    	mavenCentral()
 	jcenter()
 }
+
+buildscript {
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
+    }
+  }
+  dependencies {
+    classpath "org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.2"
+  }
+}
+
 compileJava {options.encoding = "UTF-8"}
 compileTestJava {options.encoding = "UTF-8"}
 
 // In this section you declare the dependencies for your production and test code
 dependencies {
-	
-	
 	
 	providedCompile 'javax.servlet:javax.servlet-api:3.0.1'
 	providedCompile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
@@ -30,4 +44,20 @@ dependencies {
 
 war {
     archiveName = 'DiandaluWEB.war'
+}
+
+test{
+ reports.junitXml.destination="/test-results"
+ 
+ jacoco {
+  destinationFile = file("build/jacoco/jacoco.exec")
+ }
+}
+
+sonarqube {
+	 properties {
+	    property "sonar.host.url", "http://localhost:9000"
+        property "sonar.language", "java"
+        property "sonar.sources", "src/main/" 
+	  }
 }

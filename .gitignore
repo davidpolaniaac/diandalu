@@ -1,5 +1,8 @@
 # Created by https://www.gitignore.io/api/eclipse,gradle,java
 
+## Test ##
+test-results/
+
 ### Eclipse ###
 
 .metadata

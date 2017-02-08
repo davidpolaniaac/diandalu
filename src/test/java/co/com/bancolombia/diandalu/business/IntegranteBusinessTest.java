@@ -1,7 +1,13 @@
-package co.com.bancolombia.diandalu.service;
+package co.com.bancolombia.diandalu.business;
+
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,20 +15,17 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-import static org.junit.Assert.*;
 
-import co.com.bancolombia.diandalu.business.IntegranteBusiness;
 import co.com.bancolombia.diandalu.entidades.Integrante;
 
 @RunWith(MockitoJUnitRunner.class)
-public class IntegranteServiceTest {
-	
+public class IntegranteBusinessTest {
 	@Mock
-	private IntegranteBusiness integranteBusiness;
-	
+	private EntityManager entityManager;
 	@InjectMocks
-	private IntegranteService integranteService;
-	
+	private IntegranteBusiness integranteBusiness;
+	@Mock
+	TypedQuery<Integrante> typedQuery;
 	private List<Integrante> integrantes;
 	
 	@Before
@@ -34,13 +37,14 @@ public class IntegranteServiceTest {
 	}
 	
 	@Test
-	public void testGetIntegrantes(){
+	public void testObtenerIntegrantes(){
 		
 		//arrange
-		Mockito.when(integranteBusiness.obtenerIntegrantes()).thenReturn(integrantes);
+		Mockito.when(entityManager.createNamedQuery("Integrante.findAll",Integrante.class)).thenReturn(typedQuery);
+		Mockito.when(typedQuery.getResultList()).thenReturn(integrantes);
 		
 		//act
-		List<Integrante> integrantesObtenidos = integranteService.getIntegrantes();
+		List<Integrante> integrantesObtenidos = integranteBusiness.obtenerIntegrantes();
 		
 		//assert
 		
@@ -55,13 +59,11 @@ public class IntegranteServiceTest {
 		Integrante integrante = new Integrante();
 		//act
 		
-		integranteService.saveIntegrante(integrante);
+		integranteBusiness.saveIntegrate(integrante);
 		
 		//assert
 		
-		Mockito.verify(integranteBusiness).saveIntegrate(integrante);
+		Mockito.verify(entityManager).persist(integrante);
 	}
-	
-	
 
 }

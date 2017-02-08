@@ -1,11 +1,10 @@
-package co.com.bancolombia.business;
+package co.com.bancolombia.diandalu.business;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import co.com.bancolombia.entidades.Integrante;
+import co.com.bancolombia.diandalu.entidades.Integrante;
 
 public class IntegranteBusiness {
 

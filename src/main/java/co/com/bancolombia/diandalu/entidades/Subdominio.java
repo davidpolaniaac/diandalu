@@ -1,4 +1,4 @@
-package co.com.bancolombia.entidades;
+package co.com.bancolombia.diandalu.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -34,9 +34,6 @@ public class Subdominio implements Serializable {
 			}
 		)
 	private List<Integrante> integrantes;
-
-	public Subdominio() {
-	}
 
 	public int getIdSubdominio() {
 		return this.idSubdominio;
