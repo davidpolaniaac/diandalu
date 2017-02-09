@@ -16,26 +16,26 @@ public class RolIntegrante implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int idRolIntegrante;
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int idRol;
 
-	private String rolIntegrante;
+	private String nombre;
 
 
 	public int getIdRolIntegrante() {
-		return this.idRolIntegrante;
+		return this.idRol;
 	}
 
 	public void setIdRolIntegrante(int idRolIntegrante) {
-		this.idRolIntegrante = idRolIntegrante;
+		this.idRol = idRolIntegrante;
 	}
 
 	public String getRolIntegrante() {
-		return this.rolIntegrante;
+		return this.nombre;
 	}
 
 	public void setRolIntegrante(String rolIntegrante) {
-		this.rolIntegrante = rolIntegrante;
+		this.nombre = rolIntegrante;
 	}
 
 }

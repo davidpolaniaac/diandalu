@@ -47,7 +47,7 @@ war {
 }
 
 test{
- reports.junitXml.destination="/test-results"
+ reports.junitXml.destination="build/test-results"
  
  jacoco {
   destinationFile = file("build/jacoco/jacoco.exec")
