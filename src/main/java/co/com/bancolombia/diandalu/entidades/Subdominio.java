@@ -33,11 +33,11 @@ public class Subdominio implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Integrante_has_Subdominio", joinColumns = {
-			@JoinColumn(name = "Integrante_idIntegrante", nullable = false, updatable = true) },
+			@JoinColumn(name = "Integrante_idIntegrante", nullable = false, updatable = false) },
 			inverseJoinColumns = { @JoinColumn(name = "Subdominio_idSubdominio",
-					nullable = false, updatable = true) })
+					nullable = false, updatable = false) })
 	@JsonManagedReference
-	private Set<Integrante> integrantes = new HashSet<Integrante>(0);
+	private Set<Integrante> integrantes = new HashSet<>(0);
 
 	public int getIdSubdominio() {
 		return this.idSubdominio;

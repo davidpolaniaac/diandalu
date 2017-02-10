@@ -4,9 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.persistence.EntityManager;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -70,9 +68,8 @@ public class SubdominioBusinessTest {
 		
 		//assert
 		assertEquals(subdominios.get(0), subdominio);
-		Mockito.verify(entityManager).find(Subdominio.class, 1);
 	}
 	
-	
+
 
 }
