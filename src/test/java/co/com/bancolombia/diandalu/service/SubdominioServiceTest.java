@@ -68,7 +68,15 @@ public class SubdominioServiceTest {
 	}
 
 	
-	
+	@Test
+	public void testCreateSubdominio(){
+		//Arrange
+		Subdominio subdominio = new Subdominio();
+		//Act
+		subdominioService.createSubdominio(subdominio);
+		//Assert
+		Mockito.verify(subdominioBusiness).createSubdominio(subdominio);
+	}
 	
 
 }
