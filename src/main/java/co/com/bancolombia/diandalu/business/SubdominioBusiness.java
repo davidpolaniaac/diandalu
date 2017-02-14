@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+
+import co.com.bancolombia.diandalu.entidades.Integrante;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 import co.com.bancolombia.diandalu.excepciones.ExistenciaSubdominio;
 
@@ -32,6 +34,13 @@ public class SubdominioBusiness {
 			throw new ExistenciaSubdominio("El subdominio ya existe");
 		}
 		
+	}
+	
+	@Transactional
+	public List<Subdominio> mostrarTodosLosSubdominios() {
+		
+		return entityManager.createNamedQuery("Subdominio.findAll",Subdominio.class)
+				.getResultList();
 	}
 
 }

@@ -3,6 +3,8 @@ package co.com.bancolombia.diandalu.service;
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -64,7 +66,7 @@ public class SubdominioServiceTest {
 		subdominioService.updateSubdominio(subdominio);
 		
 		//assert
-		Mockito.verify(subdominioBusiness).updateSubdominio(subdominio);;
+		Mockito.verify(subdominioBusiness).updateSubdominio(subdominio);
 	}
 
 	
@@ -76,6 +78,20 @@ public class SubdominioServiceTest {
 		subdominioService.createSubdominio(subdominio);
 		//Assert
 		Mockito.verify(subdominioBusiness).createSubdominio(subdominio);
+	}
+	
+	@Test
+	public void debeObtenerTodosLosSubdominioCuandoSeLlameAlServicio() throws Exception {
+		
+		//arrange
+		Mockito.when(subdominioBusiness.mostrarTodosLosSubdominios()).thenReturn(subdominios);
+		//act
+		
+		List<Subdominio> listaDeSubdominiosObtenidos= subdominioService.mostrarSubdominios();
+		
+		
+		//assert
+		assertEquals(subdominios,listaDeSubdominiosObtenidos);
 	}
 	
 

@@ -1,5 +1,7 @@
 package co.com.bancolombia.diandalu.service;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -38,6 +40,13 @@ public class SubdominioService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void createSubdominio(Subdominio subdominio) {
 		subdominioBusiness.createSubdominio(subdominio);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public List<Subdominio> mostrarSubdominios() {
+		// TODO Auto-generated method stub
+		return subdominioBusiness.mostrarTodosLosSubdominios();
 	}
 
 }

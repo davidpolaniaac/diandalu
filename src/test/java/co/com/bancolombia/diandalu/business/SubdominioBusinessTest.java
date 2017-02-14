@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +18,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 
 import co.com.bancolombia.diandalu.business.SubdominioBusiness;
+import co.com.bancolombia.diandalu.entidades.Integrante;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -23,6 +26,8 @@ public class SubdominioBusinessTest {
 	
 	@Mock
 	private EntityManager entityManager;
+	@Mock
+	private TypedQuery<Subdominio> typedQuery;
 	@InjectMocks
 	private SubdominioBusiness subdominioBusiness;
 	
@@ -70,6 +75,19 @@ public class SubdominioBusinessTest {
 		assertEquals(subdominios.get(0), subdominio);
 	}
 	
+	@Test
+	public void debeRetornarTodosLosSubdominiosCuandoSeLosSoliciteAlBusiness() throws Exception {
+		
+		//arrange
+		
+		Mockito.when(entityManager.createNamedQuery("Subdominio.findAll", Subdominio.class)).thenReturn(typedQuery);
+		Mockito.when(typedQuery.getResultList()).thenReturn(subdominios);
+		//act
+		List<Subdominio> listaDeSubdominiosObtenidosDeLaBaseDeDatos= subdominioBusiness.mostrarTodosLosSubdominios();
+		
+		//assert
+		assertEquals(subdominios, listaDeSubdominiosObtenidosDeLaBaseDeDatos);
+	}
 
 
 }
