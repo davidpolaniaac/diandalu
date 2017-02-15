@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.util.HashSet;
 import java.util.Set;
@@ -37,6 +39,7 @@ public class Subdominio implements Serializable {
 			inverseJoinColumns = { @JoinColumn(name = "Subdominio_idSubdominio",
 					nullable = false, updatable = false) })
 	@JsonManagedReference
+	@JsonIgnore
 	private Set<Integrante> integrantes = new HashSet<>(0);
 
 	public int getIdSubdominio() {
