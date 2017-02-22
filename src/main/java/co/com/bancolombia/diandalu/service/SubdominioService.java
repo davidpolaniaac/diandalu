@@ -13,6 +13,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
 import co.com.bancolombia.diandalu.business.SubdominioBusiness;
+import co.com.bancolombia.diandalu.dto.SubdominioDTO;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 
 @Path("/subdominios")
@@ -21,19 +22,18 @@ public class SubdominioService {
 	@Inject
 	private SubdominioBusiness subdominioBusiness;
 	
-	
-	 @GET  
-	 @Path("/{id}")  
-	 @Produces(MediaType.APPLICATION_JSON)  
-	 public Subdominio getSubdominioById(@PathParam("id") int id){  
+	@GET  
+	@Path("/{id}")  
+	@Produces(MediaType.APPLICATION_JSON)  
+	public SubdominioDTO getSubdominioById(@PathParam("id") int id){  
 		 return subdominioBusiness.getSubdominio(id);  
-	 }  
+	}  
 	
-	 @PUT  
-	 @Consumes(MediaType.APPLICATION_JSON)  
-	 public void updateSubdominio(Subdominio subdominio)  {  
-		subdominioBusiness.updateSubdominio(subdominio);  
-	 } 
+	@PUT  
+	@Consumes(MediaType.APPLICATION_JSON)  
+	public void updateSubdominio(SubdominioDTO subdominioDTO)  {  
+		subdominioBusiness.updateSubdominio(subdominioDTO);  
+	} 
 
 	@Path ("/crearsubdominio")
 	@POST
@@ -44,8 +44,7 @@ public class SubdominioService {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public List<Subdominio> mostrarSubdominios() {
-		// TODO Auto-generated method stub
+	public List<SubdominioDTO> mostrarSubdominios() {
 		return subdominioBusiness.mostrarTodosLosSubdominios();
 	}
 

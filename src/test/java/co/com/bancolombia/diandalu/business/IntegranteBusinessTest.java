@@ -14,9 +14,14 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 
+import co.com.bancolombia.diandalu.adapter.IntegranteAdapter;
+import co.com.bancolombia.diandalu.dto.IntegranteDTO;
 import co.com.bancolombia.diandalu.entidades.Integrante;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class IntegranteBusinessTest {
@@ -24,42 +29,59 @@ public class IntegranteBusinessTest {
 	private EntityManager entityManager;
 	@InjectMocks
 	private IntegranteBusiness integranteBusiness;
+	
+	@Mock
+	private IntegranteAdapter integranteAdapter;
+	
 	@Mock
 	TypedQuery<Integrante> typedQuery;
-	private List<Integrante> integrantes;
+	
+
+	
+	private List<IntegranteDTO> integrantesDTO;
 	
 	@Before
 	public void init(){
 		
-		integrantes = new ArrayList<Integrante>();
-		integrantes.add(new Integrante());
-		integrantes.add(new Integrante());	
+		integrantesDTO = new ArrayList<IntegranteDTO>();
+		integrantesDTO.add(new IntegranteDTO());
+		integrantesDTO.add(new IntegranteDTO());	
 	}
 	
 	@Test
-	public void testObtenerIntegrantes(){
+	public void debeRetornarTodosLosIntegrantesCuandoSeLosSoliciteAlBusiness(){
 		
 		//arrange
+		List<Integrante> listaIntegrantes = new ArrayList<>();
+		Integrante integrante = new Integrante();
+		integrante.setNombre("Angela Maria");
+		listaIntegrantes.add(integrante);
+		
 		Mockito.when(entityManager.createNamedQuery("Integrante.findAll",Integrante.class)).thenReturn(typedQuery);
-		Mockito.when(typedQuery.getResultList()).thenReturn(integrantes);
+		Mockito.when(typedQuery.getResultList()).thenReturn(listaIntegrantes);
+		 List<IntegranteDTO> listaIntegrantesDTO = new ArrayList<>();
+	
+		Mockito.when(integranteAdapter.listIntegranteToListIntegranteDTO(listaIntegrantes)).thenReturn(listaIntegrantesDTO);
+		
 		
 		//act
-		List<Integrante> integrantesObtenidos = integranteBusiness.obtenerIntegrantes();
+		List<IntegranteDTO> integrantesObtenidos = integranteBusiness.obtenerIntegrantes();
 		
 		//assert
-		
-		assertEquals(integrantes.get(0), integrantesObtenidos.get(0));
-		assertEquals(integrantes.get(1), integrantesObtenidos.get(1));
+		Mockito.verify(integranteAdapter).listIntegranteToListIntegranteDTO(listaIntegrantes);
+		assertEquals(listaIntegrantesDTO, integrantesObtenidos);
 	}
 
 
 	@Test
-	public void testSaveIntegrante(){
+	public void debeGuardarCuandoSeEnviaUnNuevoIntegrante(){
 		//arrange
+		IntegranteDTO integranteDTO = new IntegranteDTO();
 		Integrante integrante = new Integrante();
+		Mockito.when(integranteAdapter.integranteDtoToIntegrante(integranteDTO)).thenReturn(integrante);
 		//act
 		
-		integranteBusiness.saveIntegrate(integrante);
+		integranteBusiness.saveIntegrate(integranteDTO);
 		
 		//assert
 		

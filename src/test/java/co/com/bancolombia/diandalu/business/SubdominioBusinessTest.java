@@ -16,9 +16,10 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
-
+import static org.mockito.Matchers.any;
+import co.com.bancolombia.diandalu.adapter.SubdominioAdapter;
 import co.com.bancolombia.diandalu.business.SubdominioBusiness;
-import co.com.bancolombia.diandalu.entidades.Integrante;
+import co.com.bancolombia.diandalu.dto.SubdominioDTO;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -28,22 +29,29 @@ public class SubdominioBusinessTest {
 	private EntityManager entityManager;
 	@Mock
 	private TypedQuery<Subdominio> typedQuery;
+	
+	@Mock
+	private SubdominioAdapter subdominioAdapter;
+	
 	@InjectMocks
 	private SubdominioBusiness subdominioBusiness;
 	
-	private List<Subdominio> subdominios;
+
+	private List<SubdominioDTO> subdominios;
 	
 	@Before
 	public void init(){
-		subdominios = new ArrayList<Subdominio>();
-		subdominios.add(new Subdominio());
-		subdominios.add(new Subdominio());	
+		subdominios = new ArrayList<SubdominioDTO>();
+		subdominios.add(new SubdominioDTO());
+		subdominios.add(new SubdominioDTO());	
 	}
-
+	
 	@Test
 	public void debeActualizarElSubDominioCuandoLeEnvieElSubDominioCOnlosCambiosNevos() throws Exception {
 		
 		//arrange
+		Subdominio subdominio = new Subdominio();
+		Mockito.when(subdominioAdapter.subdominioDtoToSubdominio(subdominios.get(0))).thenReturn(subdominio);
 		Mockito.doAnswer(new Answer<Void>() {
 		    @Override
 		    public Void answer(InvocationOnMock invocation) throws Throwable {
@@ -52,42 +60,59 @@ public class SubdominioBusinessTest {
 			      subdominio.setNombre("WEB FONDOS");
 			      return null;
 		    }
-		}).when(entityManager).merge(subdominios.get(0));
+		}).when(entityManager).merge(subdominio);
 		    
 		//act
 		subdominioBusiness.updateSubdominio(subdominios.get(0));
 		
 		
 		//assert
-		assertEquals("WEB FONDOS", subdominios.get(0).getNombre());
+		assertEquals("WEB FONDOS", subdominio.getNombre());
 	}
+
+
 
 	@Test
 	public void cuandoLeEnvieUnIdDeSubDominioDebeRetornarElSubDominio() throws Exception {
 		
 		//arrange
-		Mockito.when(entityManager.find(Subdominio.class, 1)).thenReturn(subdominios.get(0));
+		
+		Subdominio subdominio = new Subdominio();
+		
+		
+		Mockito.when(subdominioAdapter.subdominioToSubdominioDto(subdominio)).thenReturn(subdominios.get(0));
+		
+		Mockito.when(entityManager.find(Subdominio.class, 1)).thenReturn(subdominio);
 		
 		//act
-		Subdominio subdominio =subdominioBusiness.getSubdominio(1);
+		SubdominioDTO subdominioDTO =subdominioBusiness.getSubdominio(1);
 		
 		//assert
-		assertEquals(subdominios.get(0), subdominio);
+		assertEquals(subdominios.get(0), subdominioDTO);
 	}
 	
 	@Test
 	public void debeRetornarTodosLosSubdominiosCuandoSeLosSoliciteAlBusiness() throws Exception {
 		
 		//arrange
+		List<Subdominio> listaSubdominios = new ArrayList<Subdominio>();
+		Subdominio subdominioTest1 = new Subdominio();
+		listaSubdominios.add(subdominioTest1);
+		
+		
+		Mockito.when(typedQuery.getResultList()).thenReturn(listaSubdominios);
 		
 		Mockito.when(entityManager.createNamedQuery("Subdominio.findAll", Subdominio.class)).thenReturn(typedQuery);
-		Mockito.when(typedQuery.getResultList()).thenReturn(subdominios);
+		
+		Mockito.when(subdominioAdapter.listSubdominioToListSubdominioDTO(listaSubdominios)).thenReturn(subdominios);
+		
 		//act
-		List<Subdominio> listaDeSubdominiosObtenidosDeLaBaseDeDatos= subdominioBusiness.mostrarTodosLosSubdominios();
+		List<SubdominioDTO> listaDeSubdominiosObtenidosDeLaBaseDeDatos= subdominioBusiness.mostrarTodosLosSubdominios();
 		
 		//assert
-		assertEquals(subdominios, listaDeSubdominiosObtenidosDeLaBaseDeDatos);
+		assertEquals(subdominios.get(0), listaDeSubdominiosObtenidosDeLaBaseDeDatos.get(0));
 	}
 
+	
 
 }

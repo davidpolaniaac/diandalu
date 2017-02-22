@@ -3,8 +3,6 @@ package co.com.bancolombia.diandalu.service;
 import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import co.com.bancolombia.diandalu.business.SubdominioBusiness;
+import co.com.bancolombia.diandalu.dto.SubdominioDTO;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 
 
@@ -24,13 +23,13 @@ public class SubdominioServiceTest {
 	@InjectMocks
 	private SubdominioService subdominioService;
 	
-	private List<Subdominio> subdominios;
+	private List<SubdominioDTO> subdominios;
 	
 	@Before
 	public void init(){
-		subdominios = new ArrayList<Subdominio>();
-		subdominios.add(new Subdominio());
-		subdominios.add(new Subdominio());	
+		subdominios = new ArrayList<SubdominioDTO>();
+		subdominios.add(new SubdominioDTO());
+		subdominios.add(new SubdominioDTO());	
 	}
 	
 	@Test
@@ -39,7 +38,7 @@ public class SubdominioServiceTest {
 		Mockito.when(subdominioBusiness.getSubdominio(1)).thenReturn(subdominios.get(0));
 		
 		//act
-		Subdominio subdominio = subdominioService.getSubdominioById(1);
+		SubdominioDTO subdominio = subdominioService.getSubdominioById(1);
 		
 		//assert
 		assertEquals(subdominios.get(0), subdominio);
@@ -61,7 +60,7 @@ public class SubdominioServiceTest {
 	public void debeActualizarUnSubdominioCuandoLEnvieElSubdominioConlosNuevosCambios() throws Exception {
 		
 		//arrange
-		Subdominio subdominio = new Subdominio();
+		SubdominioDTO subdominio = new SubdominioDTO();
 		//act
 		subdominioService.updateSubdominio(subdominio);
 		
@@ -87,7 +86,7 @@ public class SubdominioServiceTest {
 		Mockito.when(subdominioBusiness.mostrarTodosLosSubdominios()).thenReturn(subdominios);
 		//act
 		
-		List<Subdominio> listaDeSubdominiosObtenidos= subdominioService.mostrarSubdominios();
+		List<SubdominioDTO> listaDeSubdominiosObtenidos= subdominioService.mostrarSubdominios();
 		
 		
 		//assert

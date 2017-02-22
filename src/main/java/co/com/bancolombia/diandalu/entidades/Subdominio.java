@@ -2,13 +2,8 @@ package co.com.bancolombia.diandalu.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import java.util.HashSet;
-import java.util.Set;
 
 
 /**
@@ -20,27 +15,26 @@ import java.util.Set;
 public class Subdominio implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int idSubdominio;
 
-	@NotNull(message = "Descripcion cannot be null")
-	@Size(min = 5, max = 100, message = "Descripcion must be between 5 and 100 characters")
 	private String descripcion;
 
-	@Size(min = 2, max = 45, message = "Nombre must be between 2 and 45 characters")
-	@NotNull(message = "Name cannot be null")
 	private String nombre;
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "Integrante_has_Subdominio", joinColumns = {
-			@JoinColumn(name = "Integrante_idIntegrante", nullable = false, updatable = false) },
-			inverseJoinColumns = { @JoinColumn(name = "Subdominio_idSubdominio",
-					nullable = false, updatable = false) })
-	@JsonManagedReference
-	@JsonIgnore
-	private Set<Integrante> integrantes = new HashSet<>(0);
+	//bi-directional many-to-many association to Integrante
+	@ManyToMany
+	@JoinTable(
+		name="integrante_has_subdominio"
+		, joinColumns={
+			@JoinColumn(name="Subdominio_idSubdominio")
+			}
+		, inverseJoinColumns={
+			@JoinColumn(name="Integrante_idIntegrante")
+			}
+		)
+	private List<Integrante> integrantes;
 
 	public int getIdSubdominio() {
 		return this.idSubdominio;
@@ -66,11 +60,11 @@ public class Subdominio implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public Set<Integrante> getIntegrantes() {
+	public List<Integrante> getIntegrantes() {
 		return this.integrantes;
 	}
 
-	public void setIntegrantes(Set<Integrante> integrantes) {
+	public void setIntegrantes(List<Integrante> integrantes) {
 		this.integrantes = integrantes;
 	}
 

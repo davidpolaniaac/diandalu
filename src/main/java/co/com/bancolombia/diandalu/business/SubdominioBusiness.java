@@ -1,12 +1,13 @@
 package co.com.bancolombia.diandalu.business;
 
-import java.util.List;
 
+import java.util.List;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
-
-import co.com.bancolombia.diandalu.entidades.Integrante;
+import co.com.bancolombia.diandalu.adapter.SubdominioAdapter;
+import co.com.bancolombia.diandalu.dto.SubdominioDTO;
 import co.com.bancolombia.diandalu.entidades.Subdominio;
 import co.com.bancolombia.diandalu.excepciones.ExistenciaSubdominio;
 
@@ -15,14 +16,19 @@ public class SubdominioBusiness {
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	@Inject
+	private SubdominioAdapter subdominioAdapter;
+	
 	@Transactional
-	public Subdominio getSubdominio(int id) {
-		return entityManager.find(Subdominio.class, id);  
+	public SubdominioDTO getSubdominio(int id) {
+
+		return subdominioAdapter.subdominioToSubdominioDto(entityManager.find(Subdominio.class, id));
 	}
 	
 	@Transactional
-	public void updateSubdominio(Subdominio subdominio) {
-		 entityManager.merge(subdominio);
+	public void updateSubdominio(SubdominioDTO subdominioDTO) {
+	
+		 entityManager.merge(subdominioAdapter.subdominioDtoToSubdominio(subdominioDTO));
 	}
 	
 	@Transactional
@@ -37,10 +43,11 @@ public class SubdominioBusiness {
 	}
 	
 	@Transactional
-	public List<Subdominio> mostrarTodosLosSubdominios() {
+	public List<SubdominioDTO> mostrarTodosLosSubdominios() {
 		
-		return entityManager.createNamedQuery("Subdominio.findAll",Subdominio.class)
-				.getResultList();
+		List<Subdominio> listaSubdominio = entityManager.createNamedQuery("Subdominio.findAll",Subdominio.class).getResultList();
+		
+		return subdominioAdapter.listSubdominioToListSubdominioDTO(listaSubdominio);
 	}
 
 }

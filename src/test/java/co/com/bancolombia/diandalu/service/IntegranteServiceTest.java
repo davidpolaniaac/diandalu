@@ -10,9 +10,9 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 import static org.junit.Assert.*;
-
 import co.com.bancolombia.diandalu.business.IntegranteBusiness;
-import co.com.bancolombia.diandalu.entidades.Integrante;
+import co.com.bancolombia.diandalu.dto.IntegranteDTO;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class IntegranteServiceTest {
@@ -23,43 +23,43 @@ public class IntegranteServiceTest {
 	@InjectMocks
 	private IntegranteService integranteService;
 	
-	private List<Integrante> integrantes;
+	private List<IntegranteDTO> integrantesDTO;
 	
 	@Before
 	public void init(){
 		
-		integrantes = new ArrayList<Integrante>();
-		integrantes.add(new Integrante());
-		integrantes.add(new Integrante());	
+		integrantesDTO = new ArrayList<IntegranteDTO>();
+		integrantesDTO.add(new IntegranteDTO());
+		integrantesDTO.add(new IntegranteDTO());	
 	}
 	
 	@Test
 	public void testGetIntegrantes(){
 		
 		//arrange
-		Mockito.when(integranteBusiness.obtenerIntegrantes()).thenReturn(integrantes);
+		Mockito.when(integranteBusiness.obtenerIntegrantes()).thenReturn(integrantesDTO);
 		
 		//act
-		List<Integrante> integrantesObtenidos = integranteService.getIntegrantes();
+		List<IntegranteDTO> integrantesObtenidos = integranteService.getIntegrantes();
 		
 		//assert
 		
-		assertEquals(integrantes.get(0), integrantesObtenidos.get(0));
-		assertEquals(integrantes.get(1), integrantesObtenidos.get(1));
+		assertEquals(integrantesDTO.get(0), integrantesObtenidos.get(0));
+		assertEquals(integrantesDTO.get(1), integrantesObtenidos.get(1));
 	}
 
 
 	@Test
 	public void testSaveIntegrante(){
 		//arrange
-		Integrante integrante = new Integrante();
+		IntegranteDTO integranteDTO = new IntegranteDTO();
 		//act
 		
-		integranteService.saveIntegrante(integrante);
+		integranteService.saveIntegrante(integranteDTO);
 		
 		//assert
 		
-		Mockito.verify(integranteBusiness).saveIntegrate(integrante);
+		Mockito.verify(integranteBusiness).saveIntegrate(integranteDTO);
 	}
 	
 	

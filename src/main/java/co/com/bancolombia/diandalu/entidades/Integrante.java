@@ -2,9 +2,6 @@ package co.com.bancolombia.diandalu.entidades;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import java.util.List;
 
 
@@ -33,9 +30,7 @@ public class Integrante implements Serializable {
 	private RolIntegrante rolIntegrante;
 
 	//bi-directional many-to-many association to Subdominio
-	@ManyToMany(fetch = FetchType.LAZY,mappedBy="integrantes")
-	@JsonBackReference
-	@JsonIgnore
+	@ManyToMany(mappedBy="integrantes")
 	private List<Subdominio> subdominios;
 
 	public int getIdIntegrante() {
