@@ -1,12 +1,7 @@
 package co.com.bancolombia.diandalu.adapter;
 
 import static org.junit.Assert.*;
-
-import javax.inject.Inject;
-
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 
 import co.com.bancolombia.diandalu.dto.RolIntegranteDTO;
 import co.com.bancolombia.diandalu.entidades.RolIntegrante;

@@ -1,10 +1,7 @@
 package co.com.bancolombia.diandalu.adapter;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 import static org.junit.Assert.*;
 import org.junit.Test;
