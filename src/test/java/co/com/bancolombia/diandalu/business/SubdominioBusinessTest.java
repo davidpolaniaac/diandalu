@@ -98,7 +98,7 @@ public class SubdominioBusinessTest {
 		Subdominio subdominioTest1 = new Subdominio();
 		listaSubdominios.add(subdominioTest1);
 		
-		
+	
 		Mockito.when(typedQuery.getResultList()).thenReturn(listaSubdominios);
 		
 		Mockito.when(entityManager.createNamedQuery("Subdominio.findAll", Subdominio.class)).thenReturn(typedQuery);
