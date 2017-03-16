@@ -111,7 +111,23 @@ public class SubdominioBusinessTest {
 		//assert
 		assertEquals(subdominios.get(0), listaDeSubdominiosObtenidosDeLaBaseDeDatos.get(0));
 	}
-
+	
+	@Test
+	public void debeEliminarSubdominioCuandoRecibaUnId(){
+		//arrange
+		Subdominio subdominio = new Subdominio();
+		
+		Mockito.when(entityManager.find(Subdominio.class, 1)).thenReturn(subdominio);
+		
+		//act
+		subdominioBusiness.deleteSubdominio(1);
+				
+		//assert
+		Mockito.verify(entityManager).find(Subdominio.class, 1);
+		Mockito.verify(entityManager).remove(subdominio);
+		
+		
+	}
 	
 
 }

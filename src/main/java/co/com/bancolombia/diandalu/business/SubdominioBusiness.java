@@ -49,5 +49,11 @@ public class SubdominioBusiness {
 		
 		return subdominioAdapter.listSubdominioToListSubdominioDTO(listaSubdominio);
 	}
+	
+	@Transactional
+	public void deleteSubdominio(int id) {
+		
+		entityManager.remove(entityManager.find(Subdominio.class, id));
+	}
 
 }

@@ -93,5 +93,18 @@ public class SubdominioServiceTest {
 		assertEquals(subdominios,listaDeSubdominiosObtenidos);
 	}
 	
+	@Test
+	public void debeEliminarUnSubdominioCuandoLlegueUnId(){
+		
+		//Arrange
+		
+		
+		//Act
+		subdominioService.deleteSubdominio(1);
+		
+		//Assert
+		Mockito.verify(subdominioBusiness).deleteSubdominio(1);
+	}
+	
 
 }
